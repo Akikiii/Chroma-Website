@@ -1,4 +1,4 @@
-  @extends('layouts.app', ['page' => __('Color Mixer DEMO(LIMITED TO 3 ONLY)'), 'pageSlug' => 'tables'])
+  @extends('layouts.app', ['page' => __('Color Mixer DEMO(LIMITED TO 3 ONLY & Different) Refresh after mixing 3 colors'), 'pageSlug' => 'tables'])
 
   @section('content')
   <!DOCTYPE html>
