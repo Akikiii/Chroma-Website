@@ -36,4 +36,11 @@ app.component('example-component', ExampleComponent);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+
+$(document).ready(function() {
+    if ($('.fancybox').length) {
+      $('.fancybox').fancybox().trigger('click');
+    }
+  });
+  
 app.mount('#app');

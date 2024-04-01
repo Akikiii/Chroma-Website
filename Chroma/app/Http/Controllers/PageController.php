@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 class PageController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class PageController extends Controller
      */
     public function maps()
     {
-        return view('pages.maps');
+        return view('pages.Hex-Identifier');
     }
 
     /**
@@ -31,7 +32,7 @@ class PageController extends Controller
      */
     public function tables()
     {
-        return view('pages.tables');
+        return view('pages.Color-Mixer');
     }
 
     /**
@@ -41,7 +42,7 @@ class PageController extends Controller
      */
     public function notifications()
     {
-        return view('pages.notifications');
+        return view('pages.Canvas-Measure');
     }
 
     /**
@@ -73,4 +74,10 @@ class PageController extends Controller
     {
         return view('pages.upgrade');
     }
+    public function upload(Request $request)
+    
+    {
+    }
+    
+    
 }

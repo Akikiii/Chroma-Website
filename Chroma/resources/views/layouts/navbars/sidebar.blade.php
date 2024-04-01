@@ -20,7 +20,7 @@
 
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
+                        <li @if ($pageSlug == 'profile') class="active " @endif>    
                             <a href="{{ route('profile.edit')  }}">
                                 <i class="tim-icons icon-single-02"></i>
                                 <p>{{ __('User Profile') }}</p>
@@ -44,19 +44,19 @@
             <li @if ($pageSlug == 'maps') class="active " @endif>
                 <a href="{{ route('pages.maps') }}">
                     <i class="tim-icons icon-pin"></i>
-                    <p>{{ __('Maps') }}</p>
+                    <p>{{ __('Color Picker') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'notifications') class="active " @endif>
+            <li @if ($pageSlug == 'Canvas Measuring Tool') class="active " @endif>
                 <a href="{{ route('pages.notifications') }}">
                     <i class="tim-icons icon-bell-55"></i>
-                    <p>{{ __('Notifications') }}</p>
+                    <p>{{ __('Canvas Measuring Tool') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'tables') class="active " @endif>
+            <li @if ($pageSlug == 'Mixing Tool') class="active " @endif>
                 <a href="{{ route('pages.tables') }}">
                     <i class="tim-icons icon-puzzle-10"></i>
-                    <p>{{ __('Table List') }}</p>
+                    <p>{{ __('Mixing Tool') }}</p>
                 </a>
             </li>
             <li @if ($pageSlug == 'typography') class="active " @endif>
@@ -65,14 +65,7 @@
                     <p>{{ __('Typography') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'rtl') class="active " @endif>
-                <a href="{{ route('pages.rtl') }}">
-                    <i class="tim-icons icon-world"></i>
-                    <p>{{ __('RTL Support') }}</p>
-                </a>
-            </li>
             <li class=" {{ $pageSlug == 'upgrade' ? 'active' : '' }} bg-info">
-                <a href="{{ route('pages.upgrade') }}">
                     <i class="tim-icons icon-spaceship"></i>
                     <p>{{ __('Upgrade to PRO') }}</p>
                 </a>
