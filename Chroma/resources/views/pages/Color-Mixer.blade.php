@@ -89,6 +89,9 @@
             <div id="color-box" style="width: 300px; height: 300px; border: 1px solid black; border-radius: 50%;"></div>
             <div id="color-code"></div>
     
+            <div class="card-body">
+            <div id="color-box-sim" style="width: 300px; height: 300px; border: 1px solid black; border-radius: 50%;"></div>
+            <div id="color-code-sim"></div>
             </div>
           </div>
         </div>
@@ -102,6 +105,10 @@
     const colorBox = document.getElementById('color-box');
     const colorCode = document.getElementById('color-code');
     let colorNameDiv = null;
+    const colorBoxclone = document.getElementById('color-box');
+    const colorCodeClone = document.getElementById('color-code');
+    const colorBoxSim = document.getElementById('color-box-sim');
+    const colorCodeSim = document.getElementById('color-code-sim');
 
     let color1, color2, color3;
     let numColors = 0;
@@ -121,7 +128,6 @@
             colorNameDiv.style.marginTop = '10px';
             colorBox.parentElement.insertBefore(colorNameDiv, colorCode);
           }
-          displayColorName(chroma(color1).name());
           numColors++;
         } else if (numColors < 3) {
           // Set the second or third color
@@ -143,7 +149,6 @@
       const mixedColor = chroma.mix(color1, color2, 0.50);
       colorBox.style.backgroundColor = mixedColor.css();
       colorCode.textContent = mixedColor.hex();
-      displayColorName(mixedColor.name());
     }
 
     function mixThreeColors() {
@@ -151,7 +156,6 @@
       const mixedColor = chroma.mix(mixedColor12, color3, 0.50);
       colorBox.style.backgroundColor = mixedColor.css();
       colorCode.textContent = mixedColor.hex();
-      displayColorName(mixedColor.name());
     }
 
     // Set the initial color
@@ -165,10 +169,21 @@
     }
 
     function showArtRangersPalette() {
-  document.getElementById('universal-colors').style.display = 'none';
-  document.getElementById('art-rangers-palette-other').style.display = 'block';
-}
-    // Add event listener to remove the color when clicking on the color box
+      document.getElementById('universal-colors').style.display = 'none';
+      document.getElementById('art-rangers-palette-other').style.display = 'block';
+
+      // Get the RGB values of the current color
+      const rgb = chroma(colorBox.style.backgroundColor).rgb();
+
+      // Find the nearest color from your list
+      const nearestColorName = findNearestColor(rgb);
+
+      // Display the nearest color in the color-box-sim element
+      colorBoxSim.style.backgroundColor = `rgb(${colors[colors.indexOf(nearestColorName)]})`;
+      console.log( `rgb(${colors[colors.indexOf(nearestColorName)]})`);
+      colorCodeSim.textContent = nearestColorName;
+    }
+
     colorBox.addEventListener('click', () => {
       color1 = null;
       color2 = null;
@@ -183,7 +198,125 @@
       });
       numColors = 0;
     });
+    const colorNames = [
+      'Pastel Orange',
+      'Pastel Red',
+      'Pink',
+      'Neon Pink',
+      'Neon Orange',
+      'Orange',
+      'Brilliant Red',
+      'Magenta',
+      'Titanium White',
+      'Pastel Yellow',
+      'Yellow Pale',
+      'Lemon Yellow',
+      'Pearlescent Yellow',
+      'Neon Yellow',
+      'Gold',
+      'Yellow Ochre',
+      'Viridian',
+      'Grass Green',
+      'Neon Green',
+      'Green Mid',
+      'Pastel Green',
+      'Neon Blue',
+      'Ultramarine Blue',
+      'Phthalo Blue',
+      'Pearlescent Blue',
+      'Pastel Blue',
+      'Pastel Pink',
+      'Pastel Purple',
+      'Purple',
+      'Neon Purple',
+      'Rose Red',
+      'Pastel Grey',
+      'Silver',
+      'Burnt Sienna',
+      'Burnt Umber',
+      'Black',
+      'Pearlescent Green',
+      'Pearlescent Rose',
+      'Pearlescent Red',
+      'Pearlescent Purple',
+      'Glitter Crystal',
+      'Glitter Silver',
+      'Glitter Blue',
+      'Glitter Gold',
+      'Glitter Green',
+      'Glitter Pink',
+      'Glitter Red',
+      'Glitter Purple',
+    ];
+    const colors = [
+      [255, 179, 71], // Pastel Orange
+      [255, 105, 97], // Pastel Red
+      [255, 192, 203], // Pink
+      [255, 110, 199], // Neon Pink
+      [255, 163, 67], // Neon Orange
+      [255, 165, 0], // Orange
+      [255, 0, 0], // Brilliant Red
+      [255, 0, 255], // Magenta
+      [255, 255, 255], // Titanium White
+      [253, 253, 150], // Pastel Yellow
+      [250, 250, 210], // Yellow Pale
+      [255, 244, 79], // Lemon Yellow
+      [250, 218, 94], // Pearlescent Yellow
+      [255, 255, 0], // Neon Yellow
+      [255, 215, 0], // Gold
+      [204, 119, 34], // Yellow Ochre
+      [64, 130, 109], // Viridian
+      [76, 175, 80], // Grass Green
+      [57, 255, 20], // Neon Green
+      [77, 140, 87], // Green Mid
+      [119, 221, 119], // Pastel Green
+      [77, 77, 255], // Neon Blue
+      [18, 10, 143], // Ultramarine Blue
+      [0, 15, 137], // Phthalo Blue
+      [63, 110, 170], // Pearlescent Blue
+      [174, 214, 241], // Pastel Blue
+      [255, 209, 220], // Pastel Pink
+      [177, 156, 217], // Pastel Purple
+      [128, 0, 128], // Purple
+      [191, 0, 255], // Neon Purple
+      [194, 30, 86], // Rose Red
+      [207, 207, 196], // Pastel Grey
+      [192, 192, 192], // Silver
+      [233, 116, 81], // Burnt Sienna
+      [138, 51, 36], // Burnt Umber
+      [0, 0, 0], // Black
+      [0, 166, 147], // Pearlescent Green
+      [227, 138, 174], // Pearlescent Rose
+      [170, 64, 105], // Pearlescent Red
+      [147, 112, 219], // Pearlescent Purple
+      [230, 232, 250], // Glitter Crystal
+      [206, 207, 210], // Glitter Silver
+      [0, 0, 255], // Glitter Blue
+      [223, 183, 34], // Glitter Gold
+      [0, 255, 0], // Glitter Green
+      [255, 105, 180], // Glitter Pink
+      [241, 84, 97], // Glitter Red
+      [142, 63, 226], // Glitter Purple
+    ];
+    function findNearestColor(rgb) {
+      let nearestColor = null;
+      let nearestDistance = Infinity;
 
+      for (let i = 0; i < colors.length; i++) {
+        const distance = Math.sqrt(
+          Math.pow(colors[i][0] - rgb[0], 2) +
+          Math.pow(colors[i][1] - rgb[1], 2) +
+          Math.pow(colors[i][2] - rgb[2], 2)
+        );
+
+        if (distance < nearestDistance) {
+          nearestColor = colorNames[i];
+          nearestDistance = distance;
+        }
+      }
+
+      return nearestColor;
+    }
   </script>
 </body>
 </html>

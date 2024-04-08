@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "chroma-js": "^2.4.2",
+        "color-convert": "^2.0.1",
         "color-name": "^2.0.0"
     }
 }

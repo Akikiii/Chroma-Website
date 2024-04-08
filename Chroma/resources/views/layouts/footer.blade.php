@@ -2,18 +2,18 @@
     <div class="container-fluid">
         <ul class="nav">
             <li class="nav-item">
-                <a href="https://creative-tim.com" target="blank" class="nav-link">
-                    {{ __('Creative Tim') }}
+                <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="blank" class="nav-link">
+                    {{ __('Chroma') }}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="https://updivision.com" target="blank" class="nav-link">
-                    {{ __('Updivision') }}
+                <a href="#"  class="nav-link">
+                    {{ __('About Us') }}
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    {{ __('About Us') }}
+                    {{ __('Rainbow') }}
                 </a>
             </li>
             <li class="nav-item">
