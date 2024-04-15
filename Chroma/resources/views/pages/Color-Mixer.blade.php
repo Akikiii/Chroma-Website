@@ -1,104 +1,262 @@
-  @extends('layouts.app', ['page' => __('Color Mixer DEMO(LIMITED TO 3 ONLY & Different) Refresh after mixing 3 colors'), 'pageSlug' => 'tables'])
-
-  @section('content')
-  <!DOCTYPE html>
+@extends('layouts.app', ['page' => __('Color Mixer'), 'pageSlug' => 'Color_mixer'])
+ @section('content')
+<!DOCTYPE html>
 <html>
+<style>
+ .container {
+  background-image: url("storage/uploads/bg2.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size:cover;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #666;
+}
+
+.card-box {
+  background-color: #fce4ec;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #666;
+  position: relative;
+  left: 25%;
+}
+
+.card-header {
+  background: linear-gradient(to bottom, #e6e6ff, #b3b3ff);
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: #663399;
+  padding: 10px;
+  border-radius: 5px;
+  width: max-content;
+  margin: 0 auto;
+  display: block;
+}
+
+.dropdown {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.box {
+  background: linear-gradient(to bottom, #b3b3ff, #4CAF50);
+  padding: 10px;
+  border-radius: 5px;
+  width: 150px;
+  position:absolute;
+  margin-left: -73px;
+  text-align: center;
+}
+
+.bold {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#mix-button {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#clear-button {
+  display: inline-block;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.palette-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.dropdown-item {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+</style>
+
 <head>
   <title>Color Mixer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div class="col-md-10">
-        <div class="card">
+      <div class="col-md-8">
+        <div class="card-box">
           <div class="card-header">
-            <h4 class="card-title">Mix n Match!</h4>
+            <h4 class="card-title" style="text-align: center;">Mix n Match!</h4>
+            <h6 class= "card-statement" style="text-align: center;"> Mix and match your colors to find its nearest Art ranger color!</h6>
           </div>
-
+        <div class="card-body" style="display: flex; flex-direction: row; justify-content: center;">
+          <div class="button-container" style="margin-right: 30px;">
+            <button class="palette-button" type="button" id="paletteDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Palette <span id="selectedPalette">(Universal Colors)</span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="paletteDropdown">
+              <a class="dropdown-item" href="#" onclick="showUniversalColors()">Universal colors</a>
+              <a class="dropdown-item" href="#" onclick="showArtRangersPalette()">Art Rangers Palette</a>
+            </div>
+          </div>
           <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Palette
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" onclick="showUniversalColors()">Universal colors</a>
-                <a class="dropdown-item" href="#" onclick="showArtRangersPalette()">Art Rangers Palette</a>
+          <button class="palette-button" type="button" id="spoonMeasurementDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Spoon Measurement <span id="selectedSpoonMeasurement">(1 tbsp)</span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="spoonMeasurementDropdown">
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.03825);">1/4 tsp</a>
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.0765);">1/2 tsp</a>
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.152999);">1 tsp</a>
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.114749);">1/4 tbsp</a>
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.229499);">1/2 tbsp</a>
+            <a class="dropdown-item" href="#" onclick="setSpoonMeasurement(0.458997);">1 tbsp</a>
+          </div>
+        </div>
+    </div>
+          <div class="row mt-3" id="color-choices" style="display: flex; flex-wrap: nowrap; display: flex; flex-direction: row; justify-content: center; margin-left:20px;">
+            <div class="col-10" id="universal-colors">
+              <div class="row justify-content-evenly">
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: white; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: yellow; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: orange; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: green; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: blue; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: brown; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: black; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: red; width:65px; height:65px; border-radius: 50%;"></button>
+                  </div>
               </div>
             </div>
-
-          <div class="row mt-3" id="color-choices" style="display: flex; flex-wrap: wrap;">
-            <div class="col-12" id="universal-colors">
+            <div class="col-10" id="art-rangers-palette-other" style="display: none;">
               <div class="row justify-content-evenly">
-                  <div class="col-1">
-                      <button class="button" style="background-color: white; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #F3F4F7; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: yellow; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #8A3324; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: orange; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #FF00FF; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: green; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #000f89; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: blue; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #4D8C57; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: brown; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #FFA500; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: black; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: #fdfd96; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: red; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-              </div>
-            </div>
-            <div class="col-12" id="art-rangers-palette-other" style="display: none;">
-              <div class="row justify-content-evenly">
-                  <div class="col-1">
-                      <button class="button" style="background-color: #F3F4F7; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #8A3324; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #FF00FF; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #000f89; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #4D8C57; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #FFA500; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: #fdfd96; width: 75px; height: 75px; border-radius: 50%;"></button>
-                  </div>
-                  <div class="col-1">
-                      <button class="button" style="background-color: black ; width: 75px; height: 75px; border-radius: 50%;"></button>
+                  <div class="col-1.5">
+                      <button class="button" style="background-color: black ; width:65px; height:65px; border-radius: 50%;"></button>
                   </div>
                 </div>
             </div>
           </div>
-
+          <div class="card-body" style="display: flex; flex-direction: row; justify-content: center;">
+            <div id="color-box" style="width: 250px; height: 250px; border: 2px solid black; border-radius: 50%; position: relative; display: inline-block; padding: 10px;">
+        
+            </div>
+            <div id="color-box-sim" style="width: 250px; height: 250px; border: 2px solid black; border-radius: 50%; position: relative; display: inline-block; margin-left: 180px; padding: 10px;">
+             
+            </div>
+          </div>
           <div class="card-body">
-            <div id="color-box" style="width: 300px; height: 300px; border: 1px solid black; border-radius: 50%;"></div>
-            <div id="color-code"></div>
-    
+            <div style="text-align: center;">
+            <div id="color-code" style="text-align:left; font-size: 1.2em; color: #333; font-weight: bold; padding-left: 10px;"></div>
+            </div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+              <div class="box">
+                <p class="bold">Press me to Mix it!</p>
+                <button id="mix-button" class="btn btn-primary">Mix It!</button>
+                <button id="clear-button" class="btn btn-primary">Clear!</button>
+              </div>
+            </div>
             <div class="card-body">
-            <div id="color-box-sim" style="width: 300px; height: 300px; border: 1px solid black; border-radius: 50%;"></div>
-            <div id="color-code-sim"></div>
+              <div style="text-align: center;">
+              <div id="color-code-sim" style="text-align:right; font-size: 1.2em; color: #333; font-weight: bold; padding-left: 10px;"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.3.0/chroma.min.js"></script>
   <script>
     const colorButtons = document.querySelectorAll('button[style]');
@@ -110,51 +268,45 @@
     const colorBoxSim = document.getElementById('color-box-sim');
     const colorCodeSim = document.getElementById('color-code-sim');
 
-    let color1, color2, color3;
+    let colorsList = [];
     let numColors = 0;
+    let colorsWeight = []; 
 
     colorButtons.forEach(button => {
       button.addEventListener('click', () => {
-        if (!color1) {
-          // Set the first color
-          color1 = button.style.backgroundColor;
-          colorBox.style.backgroundColor = color1;
-          colorCode.textContent = chroma(color1).hex();
+        if (numColors < 6) {
+          colorsWeight.push(spoonMeasurement);
+          // Set the color
+          colorsList[numColors] = button.style.backgroundColor;
+          colorBox.style.backgroundColor = colorsList[numColors];
+          colorCode.textContent = chroma(colorsList[numColors]).hex();
           button.classList.add('active');
           if (!colorNameDiv) {
             colorNameDiv = document.createElement('div');
             colorNameDiv.style.fontSize = '18px';
             colorNameDiv.style.fontWeight = 'bold';
             colorNameDiv.style.marginTop = '10px';
-            colorBox.parentElement.insertBefore(colorNameDiv, colorCode);
           }
           numColors++;
-        } else if (numColors < 3) {
-          // Set the second or third color
-          if (!color2) {
-            color2 = button.style.backgroundColor;
-            mixTwoColors();
-          } else if (!color3) {
-            color3 = button.style.backgroundColor;
-            mixThreeColors();
-          }
-          button.classList.add('active');
-          button.previousElementSibling.classList.add('active');
-          numColors++;
+          console.log(colorsList + " This is the Color List");
+          console.log(colorsWeight + " This is weight");
         }
       });
     });
 
-    function mixTwoColors() {
-      const mixedColor = chroma.mix(color1, color2, 0.50);
-      colorBox.style.backgroundColor = mixedColor.css();
-      colorCode.textContent = mixedColor.hex();
-    }
+    const mixButton = document.getElementById('mix-button');
 
-    function mixThreeColors() {
-      const mixedColor12 = chroma.mix(color1, color2, 0.50);
-      const mixedColor = chroma.mix(mixedColor12, color3, 0.50);
-      colorBox.style.backgroundColor = mixedColor.css();
+    mixButton.addEventListener('click', () => {
+      mixColors();
+      const rgb = chroma(colorBox.style.backgroundColor).rgb();
+      const nearestColorName = findNearestColor(rgb);
+      document.getElementById('color-code-sim').innerHTML = nearestColorName;
+      colorCodeSim.textContent = nearestColorName;
+    });
+ 
+    function mixColors() {
+      let mixedColor = chroma.average(colorsList, 'lch', colorsWeight);
+      colorBox.style.backgroundColor = mixedColor.css();  
       colorCode.textContent = mixedColor.hex();
     }
 
@@ -163,41 +315,59 @@
     colorBox.style.backgroundColor = initialColor;
     colorCode.textContent = chroma(initialColor).hex();
 
+
+    let spoonMeasurement = 0.458997; 
+
+    function setSpoonMeasurement(measurement) {
+      console.log(measurement);
+      spoonMeasurement = measurement;
+      if(measurement == 0.03825){
+        document.getElementById('selectedSpoonMeasurement').textContent = '(1/4 tsp)';
+      } else if(measurement == 0.0765){
+        document.getElementById('selectedSpoonMeasurement').textContent = '(1/2 tsp)';
+      } else if(measurement == 0.152999){
+        document.getElementById('selectedSpoonMeasurement').textContent = '(1 tsp)';
+      } else if(measurement == 0.114749){
+        document. getElementById('selectedSpoonMeasurement').textContent = '(1/4 tbsp)';
+      } else if(measurement == 0.229499){
+        document.getElementById('selectedSpoonMeasurement').textContent = '(1/2 tbsp)';
+      } else if(measurement == 0.458997){
+        document.getElementById('selectedSpoonMeasurement').textContent = '(1 tbsp)';
+      }
+    }
+
     function showUniversalColors() {
       document.getElementById('universal-colors').style.display = 'block';
       document.getElementById('art-rangers-palette-other').style.display = 'none';
+      document.getElementById('selectedPalette').textContent = '(Universal colors)';
     }
 
     function showArtRangersPalette() {
       document.getElementById('universal-colors').style.display = 'none';
       document.getElementById('art-rangers-palette-other').style.display = 'block';
+      document.getElementById('selectedPalette').textContent = '(Art Rangers Palette)';
 
       // Get the RGB values of the current color
-      const rgb = chroma(colorBox.style.backgroundColor).rgb();
-
-      // Find the nearest color from your list
-      const nearestColorName = findNearestColor(rgb);
-
-      // Display the nearest color in the color-box-sim element
-      colorBoxSim.style.backgroundColor = `rgb(${colors[colors.indexOf(nearestColorName)]})`;
-      console.log( `rgb(${colors[colors.indexOf(nearestColorName)]})`);
-      colorCodeSim.textContent = nearestColorName;
+  
     }
 
-    colorBox.addEventListener('click', () => {
-      color1 = null;
-      color2 = null;
-      color3 = null;
-      colorBox.style.backgroundColor = '';
-      colorCode.textContent = '';
-      if (colorNameDiv) {
-        colorNameDiv.textContent = '';
-      }
-      colorButtons.forEach(button => {
-        button.classList.remove('active');
-      });
-      numColors = 0;
-    });
+    const clearButton = document.getElementById('clear-button');
+
+    
+        clearButton.addEventListener('click', () => {
+          console.log("working");
+          colorBox.style.backgroundColor = '';
+          colorCode.textContent = '';
+          if (colorNameDiv) {
+            colorNameDiv.textContent = '';
+          }
+          colorButtons.forEach(button => {
+            button.classList.remove('active');
+          });
+          numColors = 0;
+          colorsWeight = [];
+          colorsList = [];
+        });
     const colorNames = [
       'Pastel Orange',
       'Pastel Red',
@@ -299,6 +469,7 @@
       [142, 63, 226], // Glitter Purple
     ];
     function findNearestColor(rgb) {
+      console.log(rgb);
       let nearestColor = null;
       let nearestDistance = Infinity;
 
@@ -312,9 +483,9 @@
         if (distance < nearestDistance) {
           nearestColor = colorNames[i];
           nearestDistance = distance;
+          colorBoxSim.style.backgroundColor = `rgb(` + colors[i] + ")";
         }
       }
-
       return nearestColor;
     }
   </script>
