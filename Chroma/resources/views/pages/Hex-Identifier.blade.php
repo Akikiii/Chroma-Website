@@ -516,6 +516,17 @@
       document.querySelector('#artranger_hex').textContent ="Name: " + nearestColor;
       return nearestColor;
     }
+    
+      function addColorPreviewClickListener() {
+      const colorPreview = document.getElementById("color_preview");
+      colorPreview.addEventListener("click", function() {
+        const colorHex = document.getElementById("color_hex").innerText;
+        window.location.href = `{{ route('pages.tables') }}?color=${colorHex}`;
+      });
+    }
+
+    // Call the function after the DOM has loaded
+    window.onload = addColorPreviewClickListener;
   </script>
 
 </body>

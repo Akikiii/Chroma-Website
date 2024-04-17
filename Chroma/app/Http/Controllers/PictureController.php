@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\DB; // Import for database interactions
 
 class PictureController extends Controller
 {
+
+            public function show(Request $request)
+        {
+            $color = $request->query('color');
+            // Do something with the $color variable
+            return view('pages.tables', compact('color'));
+        }
+
     public function findNearestColor(Request $request)
     {
         // Validate and retrieve RGB values from request (adjust based on your data structure)

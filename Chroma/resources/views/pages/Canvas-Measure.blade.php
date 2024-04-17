@@ -36,6 +36,40 @@
     </div>
   </div>
 </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card card-pastel">
+        <div class="card-header">
+          <h4 class="card-title">Canva Measurement Tool</h4>
+          <p class="card-category">1 oz of paint covers approximately covers 25 square inches</p>
+        </div>
+        <div class="card-body">
+          <div id="sidesContainer">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="side1Width">Side 1 Width (in inch)</label>
+                <input type="number" step="0.1" class="form-control side-input" id="side1Width" name="side1Width" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="side1Height">Side 1 Height (in inch)</label>
+                <input type="number" step="0.1" class="form-control side-input" id="side1Height" name="side1Height" required>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="addSide()">Add Side</button>
+          <button type="button" class="btn btn-danger" onclick="removeSide()">
+            <i class="tim-icons icon-trash-simple"></i>
+          </button>
+          <div class="form-group">
+            <label for="paint">Paint Needed (in oz)</label>
+            <input type="number" step="0.1" class="form-control paint-input" id="paint" name="paint" disabled>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="calculatePaint()">Calculate Paint Needed</button>        
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 <script>

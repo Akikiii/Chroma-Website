@@ -109,7 +109,7 @@
   border-radius: 5px;
 }
 
-.dropdown-menu {
+.dropdown-menu, .dropdown-medium{
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -131,6 +131,8 @@
 .dropdown-item:hover {
   background-color: #f1f1f1;
 }
+
+
 </style>
 
 <head>
@@ -146,16 +148,30 @@
             <h4 class="card-title" style="text-align: center;">Mix n Match!</h4>
             <h6 class= "card-statement" style="text-align: center;"> Mix and match your colors to find its nearest Art ranger color!</h6>
           </div>
-        <div class="card-body" style="display: flex; flex-direction: row; justify-content: center;">
-          <div class="button-container" style="margin-right: 30px;">
-            <button class="palette-button" type="button" id="paletteDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Palette <span id="selectedPalette">(Universal Colors)</span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="paletteDropdown">
-              <a class="dropdown-item" href="#" onclick="showUniversalColors()">Universal colors</a>
-              <a class="dropdown-item" href="#" onclick="showArtRangersPalette()">Art Rangers Palette</a>
+          <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
+            <div class="button-container" style="margin-right: 30px;">
+              <button class="palette-button" type="button" id="paletteDropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Palette <span id="selectedPalette1">(Universal Colors)</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="paletteDropdown1">
+                <a class="dropdown-item" href="#" onclick="showUniversalColors()">Universal colors</a>
+                <a class="dropdown-item" href="#" onclick="showArtRangersPalette()">Art Rangers Palette</a>
+              </div>
             </div>
-          </div>
+
+            <div class="button-container" style="margin-right: 30px;">
+              <button class="palette-button" type="button" id="paletteDropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Palette <span id="selectedPalette2">(Type of Medium)</span>
+              </button>
+              <div class="dropdown-menu" style="position: absolute; left: 50%; transform: translateX(-50%); top: 100%;" id="artRangersSubmenu">
+                <a class="dropdown-item" href="#" onclick="showBasicColors()">Basic Colors</a>
+                <a class="dropdown-item" href="#" onclick="showPastelColors()">Pastel Colors</a>
+                <a class="dropdown-item" href="#" onclick="showMetallicColors()">Metallic Colors</a>
+                <a class="dropdown-item" href="#" onclick="showGlitterColors()">Glitter Colors</a>
+                <a class="dropdown-item" href="#" onclick="showNeonColors()">Neon Colors</a>
+              </div>
+            </div>
+
           <div class="dropdown">
           <button class="palette-button" type="button" id="spoonMeasurementDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Spoon Measurement <span id="selectedSpoonMeasurement">(1 tbsp)</span>
@@ -243,6 +259,8 @@
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
               <div class="box">
                 <p class="bold">Press me to Mix it!</p>
+                <label for="hexCodeInput">Enter Hex Code:</label>
+                <input type="text" class="form-control" id="hexCodeInput" placeholder="#ffffff">
                 <button id="mix-button" class="btn btn-primary">Mix It!</button>
                 <button id="clear-button" class="btn btn-primary">Clear!</button>
               </div>
@@ -267,10 +285,31 @@
     const colorCodeClone = document.getElementById('color-code');
     const colorBoxSim = document.getElementById('color-box-sim');
     const colorCodeSim = document.getElementById('color-code-sim');
+    const hexCodeInput = document.getElementById('hexCodeInput');
 
     let colorsList = [];
     let numColors = 0;
     let colorsWeight = []; 
+
+
+
+    window.onload = function() {
+      const urlString = window.location.href;
+      const last6Chars = urlString.slice(-6);
+      console.log("Entire URL:", urlString);
+      console.log("Last 6 characters:", last6Chars);
+      colorBox.style.backgroundColor = '#' + last6Chars;
+      colorCode.textContent = '#' + last6Chars;
+};
+      const inputHexCode = hexCodeInput;
+
+    hexCodeInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        colorBox.style.backgroundColor = '#' + inputHexCode.value;
+        colorCode.textContent = '#' + inputHexCode.value;
+      }
+    });
+
 
     colorButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -280,6 +319,7 @@
           colorsList[numColors] = button.style.backgroundColor;
           colorBox.style.backgroundColor = colorsList[numColors];
           colorCode.textContent = chroma(colorsList[numColors]).hex();
+          
           button.classList.add('active');
           if (!colorNameDiv) {
             colorNameDiv = document.createElement('div');
@@ -335,27 +375,27 @@
         document.getElementById('selectedSpoonMeasurement').textContent = '(1 tbsp)';
       }
     }
+    
+    document.querySelector("#paletteDropdown2").style.display = "none";
+
 
     function showUniversalColors() {
-      document.getElementById('universal-colors').style.display = 'block';
-      document.getElementById('art-rangers-palette-other').style.display = 'none';
-      document.getElementById('selectedPalette').textContent = '(Universal colors)';
-    }
+    document.getElementById('universal-colors').style.display = 'block';
+    document.getElementById('art-rangers-palette-other').style.display = 'none';
+    document.getElementById('selectedPalette1').textContent = '(Universal colors)';
+    document.querySelector("#paletteDropdown2").style.display = "none";
+  }
 
-    function showArtRangersPalette() {
-      document.getElementById('universal-colors').style.display = 'none';
-      document.getElementById('art-rangers-palette-other').style.display = 'block';
-      document.getElementById('selectedPalette').textContent = '(Art Rangers Palette)';
-
-      // Get the RGB values of the current color
-  
-    }
-
+  function showArtRangersPalette() {
+    document.getElementById('universal-colors').style.display = 'none';
+    document.getElementById('art-rangers-palette-other').style.display = 'block';
+    document.getElementById('selectedPalette1').textContent = '(Art Rangers Palette)';
+    document.querySelector("#paletteDropdown2").style.display = "block";
+  }
     const clearButton = document.getElementById('clear-button');
 
     
         clearButton.addEventListener('click', () => {
-          console.log("working");
           colorBox.style.backgroundColor = '';
           colorCode.textContent = '';
           if (colorNameDiv) {
