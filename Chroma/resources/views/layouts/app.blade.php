@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -22,23 +21,222 @@
         <link href="{{ asset('black') }}/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
         <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
     </head>
+
+    <style>
+         .myNav {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            line-height: 50px;
+            background-color: #F1E6FF;
+            padding: 0 20px; 
+            max-width: 100%; 
+            justify-content: space-between;
+            }
+
+            .myNav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: inline-block; 
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            }
+
+            .myNav li {
+            font-weight:bold;
+            float: left;
+            display: flex;
+            align-items: center; 
+            }
+
+            .myNav li a {
+            font-size:17px;
+            font-weight:bold;    
+            display: inline-block;
+            text-align: center;
+            padding: 14px 16px;
+            color: #5F1CFF;
+            text-decoration: none;
+            }
+
+            .myNav li a:hover {
+            color: #333; 
+            }
+            
+            .myNav li a.active {
+                background-color: #ccc; 
+                color: #fff; 
+            }
+
+            .login-signup a:first-child {
+                margin-right: 10px;
+                }
+
+                .login-signup {
+                float: right;
+                margin-top: 5px;
+                display: flex; 
+                align-items: center; 
+                }
+
+            .login-signup a {
+                top: 5px;
+                display: relative;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                width: 80px;
+                height: 40px;
+                background-color: #5F1CFF; 
+                color: #F1E6FF; 
+                text-decoration: none;
+                cursor: pointer;
+                text-align: center; 
+                white-space: nowrap; 
+                overflow: hidden;
+                line-height: 20px;
+                text-overflow: ellipsis; 
+                }
+
+            .login-signup a:hover {
+            background-color: #333; /* Change the button background color on hover */
+            color: #F1E6FF; /* Keep the button text color the same on hover */
+            }
+
+            .login-signup.login {
+            margin-right: 10px;
+            }
+
+            
+            .logo {
+            width: 150px; /* Set the logo width */
+            height: 150px; /* Set the logo height */
+            margin-right: 20px; /* Add some margin between the logo and the navigation links */
+            }
+
+            .MainBackground {
+            background-image: url("storage/uploads/MainBg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover; 
+            height: 100vh; 
+            width: 100vw;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            }
+
+            .ContentContainer {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box; /* include the padding in the width and height */
+            background-color: rgba(42, 29, 68, 0.8); /* white background with 80% opacity */
+            opacity: 1; /* add this to make the content fully opaque */
+            }
+
+            .headline{
+                display: flex;
+                color: white;
+                font-size: 74px;
+                font-weight: bold;
+                text-align: left;
+                margin-top: 9%; 
+                margin-left:5%;
+                }
+                .subheadline{
+                color: white;
+                font-size: 74px;
+                font-weight: bold;
+                text-align: left; 
+                margin-left:5%;
+                margin-top: -20px;
+                }
+            
+                .miniText{
+       
+                    color:white;
+                    font-size:24;
+                    font-weight:bold;
+                    text-align:left;
+                    margin-top: -25px;
+                    margin-left: 5%;
+                    
+                }
+                .side-input {
+                    background-color: white;
+                    margin-left:20%;
+                    border-radius: 20px;
+                    padding: 15px 20px;
+                    font-size: 16px;
+                    margin-top: -25px;
+                    width: 800px;
+                    margin-bottom: 4px; 
+                    border: 2px solid #8E44AD;
+                    }
+
+                    .start-mixing {
+                    background-color:#BA44AD;
+                    position:relative;
+                    font-weight:bold;
+                    font-size: 20px;
+                    font-style: italic;
+                    color: white;
+                    width: 55%; 
+                    height: 50px; 
+                    margin-top: -40px;
+                    margin-left: -30px;
+                    border-radius: 30px;
+                    text-align: center;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    top: -17px;
+                    left: 670px;
+                    line-height: 10px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    }
+
+                    .start-mixing:hover {
+                        background-color: #9C4E9F; /* darker purple button color on hover */
+                        }
+   
+    </style>
     <body class="{{ $class ?? '' }}">
         @auth()
             <div class="wrapper">
-                    @include('layouts.navbars.sidebar')
-                <div class="main-panel">
-                    @include('layouts.navbars.navbar')
-
-                    <div class="content">
-                        @yield('content')
-                    </div>
-
-                    @include('layouts.footer')
-                </div>
-            </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+                    <div class="MainBackground">
+                        <div class="ContentContainer">
+                            <nav class="myNav">
+                            <ul>
+                                <img src="storage\uploads\BGMain2.png" alt="Logo" class="logo"> 
+                                <li><a href="home">Home</a></li>
+                                <li><a href="storage\uploads\about.jpg">About Us</a></li>
+                                <li><a href="Color_mixer#FFFFFF">Mixing Simulator</a></li>
+                                <li><a href="Hex_Identifier">Pixel Finder</a></li>
+                                <li><a href="Measurement_Tool">Canvas Measurement</a></li>
+                            </ul>
+                            <div class="login-signup">
+                                <a href="#" class="login">Log in</a>
+                                <a href="#" class="signup">Sign up</a>
+                            </div>
+                            </nav>
+                            <div class="content">
+                            @yield('content')
+                            </div>
+                            <h1 class="headline">Get the perfect mix in</h1>
+                            <h1 class="subheadline">just a few seconds.</h1>
+                            <h2 class="miniText"> Mixing paint has never been easier </h2>
+                            <div class="email-holder">
+                                <div class="form-group col-md-3">
+                                <input type=""  class="side-input" id="email" name="side1Width" placeholder="Enter Your Email Address">
+                                <button class="start-mixing">Start Mixing!</button>
+                                </div>
+                            </div>
+                            @include('layouts.footer')
+                            </div>
+                        </div>
         @else
             @include('layouts.navbars.navbar')
             <div class="wrapper wrapper-full-page">
@@ -52,43 +250,7 @@
                 </div>
             </div>
         @endauth
-        <div class="fixed-plugin">
-            <div class="dropdown show-dropdown">
-                <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-                </a>
-                <ul class="dropdown-menu">
-                <li class="header-title"> Sidebar Background</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                    <div class="badge-colors text-center">
-                        <span class="badge filter badge-primary active" data-color="primary"></span>
-                        <span class="badge filter badge-info" data-color="blue"></span>
-                        <span class="badge filter badge-success" data-color="green"></span>
-                    </div>
-                    <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="button-container">
-                    <a href="https://www.creative-tim.com/product/black-dashboard-laravel" target="_blank" class="btn btn-primary btn-block btn-round">Download Now</a>
-                    <a href="https://demos.creative-tim.com/black-dashboard/docs/1.0/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block btn-round">
-                    Documentation
-                    </a>
-                    <a href="https://www.creative-tim.com/product/black-dashboard-pro-laravel" target="_blank" class="btn btn-danger btn-block btn-round">
-                    Upgrade to PRO
-                    </a>
-                </li>
-                <li class="header-title">Thank you for 95 shares!</li>
-                <li class="button-container text-center">
-                    <button id="twitter" class="btn btn-round btn-info"><i class="fab fa-twitter"></i> &middot; 45</button>
-                    <button id="facebook" class="btn btn-round btn-info"><i class="fab fa-facebook-f"></i> &middot; 50</button>
-                    <br>
-                    <br>
-                    <a class="github-button" href="https://github.com/creativetimofficial/black-dashboard-laravel" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-                </li>
-                </ul>
-            </div>
-        </div>
+       
         <script src="{{ asset('black') }}/js/core/jquery.min.js"></script>
         <script src="{{ asset('black') }}/js/core/popper.min.js"></script>
         <script src="{{ asset('black') }}/js/core/bootstrap.min.js"></script>
@@ -107,6 +269,9 @@
         @stack('js')
 
         <script>
+
+
+
             $(document).ready(function() {
                 $().ready(function() {
                     $sidebar = $('.sidebar');

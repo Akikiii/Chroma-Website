@@ -1,80 +1,35 @@
 @extends('layouts.app', ['page' => __('Canva Measurement Tool (1 oz = 25 sq in)'), 'pageSlug' => 'canva'])
 
 @section('content')
-<div class = container>
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card card-pastel">
-        <div class="card-header">
-          <h4 class="card-title">Canva Measurement Tool</h4>
-          <p class="card-category">1 oz of paint covers approximately covers 25 square inches</p>
-        </div>
-        <div class="card-body">
-          <div id="sidesContainer">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="side1Width">Side 1 Width (in inch)</label>
-                <input type="number" step="0.1" class="form-control side-input" id="side1Width" name="side1Width" required>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="side1Height">Side 1 Height (in inch)</label>
-                <input type="number" step="0.1" class="form-control side-input" id="side1Height" name="side1Height" required>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" onclick="addSide()">Add Side</button>
-          <button type="button" class="btn btn-danger" onclick="removeSide()">
-            <i class="tim-icons icon-trash-simple"></i>
-          </button>
-          <div class="form-group">
-            <label for="paint">Paint Needed (in oz)</label>
-            <input type="number" step="0.1" class="form-control paint-input" id="paint" name="paint" disabled>
-          </div>
-          <button type="button" class="btn btn-primary" onclick="calculatePaint()">Calculate Paint Needed</button>        
-        </div>
-      </div>
+<div class="container">
+  <h4 class="card-title">Canva Measurement Tool</h4>
+  <h6 class="small-title">1 OZ OF PAINT COVERS APPROXIMATELY 25 SQUARE INCHES</h6>
+  <form>
+    <div class="side-group">
+      <label for="side1Width">Width(Inches)</label>
+      <input type="number" step="0.1" class="side-control" id="side1Width" name="side1Width" placeholder = "0.00"required>
     </div>
+    <div class="side-group">
+      <label for="side1Height">Length(Inches)</label>
+      <input type="number" step="0.1" class="side-control" id="side1Height" name="side1Height" placeholder ="0.00" required>
+    </div>
+    <div class="side-group">
+      <label for="paint">Paint Needed (in oz)</label>
+      <input type="number" step="0.1" class="paint-input" id="paint" name="paint" placeholder="0.00" disabled>
+    </div>
+    <button type="button" class="btn-primary" onclick="calculatePaint()">Calculate Paint Needed</button>
+    <div class="image-container">
+    <img src="storage\uploads\guide.jpg" alt="Your Image Description">
   </div>
+  </form>
 </div>
-
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card card-pastel">
-        <div class="card-header">
-          <h4 class="card-title">Canva Measurement Tool</h4>
-          <p class="card-category">1 oz of paint covers approximately covers 25 square inches</p>
-        </div>
-        <div class="card-body">
-          <div id="sidesContainer">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="side1Width">Side 1 Width (in inch)</label>
-                <input type="number" step="0.1" class="form-control side-input" id="side1Width" name="side1Width" required>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="side1Height">Side 1 Height (in inch)</label>
-                <input type="number" step="0.1" class="form-control side-input" id="side1Height" name="side1Height" required>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" onclick="addSide()">Add Side</button>
-          <button type="button" class="btn btn-danger" onclick="removeSide()">
-            <i class="tim-icons icon-trash-simple"></i>
-          </button>
-          <div class="form-group">
-            <label for="paint">Paint Needed (in oz)</label>
-            <input type="number" step="0.1" class="form-control paint-input" id="paint" name="paint" disabled>
-          </div>
-          <button type="button" class="btn btn-primary" onclick="calculatePaint()">Calculate Paint Needed</button>        
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 <script>
   let sideCount = 1;
 
+
+  //Incase if we need more sides
   function addSide() {
     sideCount++;
     const sideContainer = document.getElementById('sidesContainer');
@@ -117,63 +72,92 @@
     const paint = totalArea / 25;
     document.getElementById('paint').value = paint.toFixed(2); //Change if needed to have more decimals
 
-    document.querySelector('.paint-input').style.backgroundColor = '#e0f7fa';
-    document.querySelector('.paint-input').style.borderColor = '#80deea';
-    document.querySelector('.paint-input').style.fontSize = '1.5rem';
-    document.querySelector('.paint-input').style.padding = '0.5rem 1rem';
+
   }
 </script>
 
 <style>
 
 .container {
-    background-image: url('/storage/uploads/bg.jpg');
-  background-size: cover;
-  background-position: center;
+  font-size: 30px;
+  font-weight:bold;
+  max-width: 150px;
+  margin: 30px 30px;
+  height: 550px;
+  padding: 50px;
+  border-radius: 15px;
+  background-color: #49366d;
+  color:whitesmoke;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
 }
 
-  .paint-input {
-    transition: background-color 0.3s, border-color 0.3s, font-size 0.3s, padding 0.3s;
-  }
+.image-container {
 
-  .card-pastel {
-      border-radius: 1rem;
-      border: 1px solid #80deea;
-      background-color: #e0f7fa;
-    }
+  margin-top:-400px;
+  width: 40%; 
+  margin-left: 600px; 
+}
 
-    .card-pastel .card-header {
-      background-color: #80deea;
-      border-top-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-    }
+.image-container img {
+  width: 800px; 
+  height: auto; 
+}
+.card-title {
+  margin-bottom: 0;
+  font-weight: bold;
+  font-size: 32px;
+  margin-top: -40px;
+}
 
-    .card-pastel .card-title {
-      color: #333;
-    }
 
-    .card-pastel .card-category {
-      color: #666;
-    }
+.small-title {
+  font-size: 14px;
+  margin-top: -25px;  
+}
 
-    .card-pastel .form-control {
-      border-radius: 1rem;
-      border: 1px solid #80deea;
-    }
 
-    .card-pastel .btn-primary {
-      background-color: #80deea;
-      border-color: #80deea;
-      color: #333;
-    }
+.side-group {
+  margin-top: 20px;
+  margin-bottom:10px;
 
-    .card-pastel .btn-danger {
-      background-color: #333;
-      border-color: #333;
-      color: #80deea;
-    }
 
-    .card-pastel .btn-danger i {
-      color: #80deea;
-    }
+}
+
+.side-control {
+  border-radius: 20px;
+  width: 20%; /* decrease the width to 20% */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.btn-primary {
+  width: 30%; 
+  padding: 10px;
+  margin-top:20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  background-color: #7b64a4;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #23527c;
+}
+.paint-input{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  width: 20%; /* decrease the width to 20% */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
 </style>
