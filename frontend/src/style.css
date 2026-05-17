@@ -1,0 +1,101 @@
+:root {
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background: #0f0c29;
+
+  font-synthesize: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Global Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, #e14eca 0%, #ba44ad 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(225, 78, 202, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(225, 78, 202, 0.6);
+  background: linear-gradient(135deg, #f555de 0%, #c447b6 100%);
+}
+
+.btn {
+  padding: 16px 45px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 35px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  line-height: inherit;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #e14eca;
+  border: 2px solid #e14eca;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(225, 78, 202, 0.1);
+  box-shadow: 0 4px 15px rgba(225, 78, 202, 0.4);
+}
+
+/* Global Layout Utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-center .gradient-text {
+  display: inline-block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.view-padding {
+  padding: 80px 20px;
+  min-height: calc(100vh - 80px); /* Account for navbar */
+  width: 100%;
+  box-sizing: border-box;
+}
